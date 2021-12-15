@@ -4,6 +4,7 @@ import Axios from "axios";
 
 function App() {
   const [pokemonName, setPokemonName] = useState("");
+  const [pokemonChosen, setPokemonChosen] = useState(false);
   const [pokemon, setPokemon] = useState({
     name: "",
     species: "",
@@ -26,6 +27,7 @@ function App() {
           defence: response.data.stats[2].base_stat,
           type: response.data.types[0].type.name,
         });
+        setPokemonChosen(true);
       }
     );
   };
@@ -42,7 +44,21 @@ function App() {
         />
         <button onClick={searchPokemon}> Search Pokemon </button>
       </div>
-      <div className="DisplaySection"></div>
+      <div className="DisplaySection">
+        {!pokemonChosen ? (
+          <h1> Please choose a Pokemon </h1>
+        ) : (
+          <>
+            <h1> {pokemon.name} </h1>
+            <img src={pokemon.img} alt="img" />
+            <h3> Species: {pokemon.species} </h3>
+            <h4> Type: {pokemon.type} </h4>
+            <h4> Hp: {pokemon.hp} </h4>
+            <h4> Attack: {pokemon.attack} </h4>
+            <h4> Defence: {pokemon.defence} </h4>
+          </>
+        )}
+      </div>
     </div>
   );
 }
